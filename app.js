@@ -1,7 +1,7 @@
 const TOTAL_QUESTIONS = 9;
 const RADIO_GROUPS = ["age", "gender", "region", "awareness", "favorite", "frequency", "purchase", "interest"];
 
-const GOOGLE_SCRIPT_URL = "COLOQUE_AQUI_SUA_URL_DO_GOOGLE_APPS_SCRIPT";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtxK-MAvafa0jWXjX90M9ElP0VIc5QviW9XXSvzjFvQH6y6ql9sfJEXOhYHpJSh5HlcQ/exec";
 
 function startSurvey() {
     document.getElementById("introScreen").classList.add("hidden");
@@ -98,7 +98,8 @@ async function submitSurvey() {
             await fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
+                redirect: "follow",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
                 body: JSON.stringify(data)
             });
             saveLocal(data);
