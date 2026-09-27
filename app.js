@@ -95,12 +95,12 @@ async function submitSurvey() {
         if (GOOGLE_SCRIPT_URL.includes("COLOQUE_AQUI")) {
             saveLocal(data);
         } else {
+            const body = new URLSearchParams();
+            Object.entries(data).forEach(([key, value]) => body.append(key, String(value)));
             await fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
                 mode: "no-cors",
-                redirect: "follow",
-                headers: { "Content-Type": "text/plain;charset=utf-8" },
-                body: JSON.stringify(data)
+                body
             });
             saveLocal(data);
         }
