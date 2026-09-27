@@ -676,7 +676,6 @@ function finish(idx){
   instruction.textContent="Mostre o prêmio e chame o próximo participante";
  };
  const popup=()=>openModal(f);
- if(reduce){ reveal(); popup(); return; }
  window.setTimeout(reveal,180);
  window.setTimeout(popup,520);
 }
@@ -700,7 +699,7 @@ spinBtn.addEventListener("click",()=>{
  const spinMain=()=>{
   wheelbox.classList.add("spinning");
   let prev=rot;
-  animate(rot,dest,reduce?0:5400,wheelEase,(v,t,now)=>{
+  animate(rot,dest,5400,wheelEase,(v,t,now)=>{
    const speed=Math.abs(v-prev)/0.016;
    prev=v;
    rot=v;
@@ -717,7 +716,6 @@ spinBtn.addEventListener("click",()=>{
   });
  };
 
- if(reduce){ rot=dest; setWheel(dest); finish(idx); return; }
  animate(current,current-8,140,t=>t*t,(v)=>{ rot=v; setWheel(v); },spinMain);
 });
 
