@@ -1,5 +1,6 @@
 const TOTAL_QUESTIONS = 9;
-const RADIO_GROUPS = ["age", "gender", "region", "awareness", "favorite", "frequency", "purchase", "interest"];
+const RADIO_GROUPS = ["age", "gender", "region", "awareness", "frequency", "purchase", "interest"];
+const MULTI_STEPS = new Set([5, 6]);
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtxK-MAvafa0jWXjX90M9ElP0VIc5QviW9XXSvzjFvQH6y6ql9sfJEXOhYHpJSh5HlcQ/exec";
 
@@ -32,7 +33,7 @@ function showStep() {
     document.getElementById("progressPercent").textContent = `${percent}%`;
     document.getElementById("progressFill").style.width = `${percent}%`;
     document.getElementById("backButton").classList.toggle("hidden", stepIndex === 0);
-    document.getElementById("nextButton").classList.toggle("hidden", !current.has(5));
+    document.getElementById("nextButton").classList.toggle("hidden", !steps[stepIndex].some((n) => MULTI_STEPS.has(n)));
     document.getElementById("submitButton").classList.toggle("hidden", !current.has(9));
     window.scrollTo(0, 0);
 }
@@ -77,7 +78,7 @@ document.addEventListener("change", function (event) {
 
     if (!input.matches('input[type="radio"]')) return;
     if (steps[stepIndex].includes(9)) return;
-    if (steps[stepIndex].includes(5)) return;
+    if (steps[stepIndex].some((n) => MULTI_STEPS.has(n))) return;
     if (stepAnswered()) setTimeout(goNext, 180);
 });
 
@@ -96,8 +97,16 @@ function validateSurvey() {
     const foods = document.querySelectorAll('input[name="foods"]:checked');
     if (foods.length === 0) {
         showError("Por favor, selecione pelo menos uma opção na pergunta 5.");
-        document.querySelector('[data-question="5"]')
-            .scrollIntoView({ behavior: "smooth", block: "center" });
+        stepIndex = steps.findIndex((step) => step.includes(5));
+        showStep();
+        return false;
+    }
+
+    const favorites = document.querySelectorAll('input[name="favorite"]:checked');
+    if (favorites.length === 0) {
+        showError("Por favor, selecione pelo menos uma opção na pergunta 6.");
+        stepIndex = steps.findIndex((step) => step.includes(6));
+        showStep();
         return false;
     }
 
@@ -120,7 +129,7 @@ function collectSurveyData() {
         region: getRadio("region"),
         awareness: getRadio("awareness"),
         foods: foods.join(", "),
-        favorite: getRadio("favorite"),
+        favorite: Array.from(document.querySelectorAll('input[name="favorite"]:checked')).map((element) => element.value).join(", "),
         frequency: getRadio("frequency"),
         purchase: getRadio("purchase"),
         interest: Number(getRadio("interest"))
