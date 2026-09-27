@@ -52,26 +52,15 @@ body::before{
 }
 .left{padding:26px 26px 22px; display:flex; flex-direction:column; overflow:hidden}
 .top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px}
-.logo-area{display:flex; gap:14px; align-items:center; min-width:0}
-.brand-logo{width:132px; height:auto; display:block}
-.kicker{font-size:11px; font-weight:800; letter-spacing:.16em; color:var(--brown)}
+.logo-area{display:flex; flex-direction:column; align-items:flex-start; gap:12px; min-width:0}
+.brand-logo{height:54px; width:auto; display:block}
+.kicker{font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#003763}
 .title{
-  font-family:"Noto Serif KR",serif; white-space:nowrap;
-  font-size:clamp(26px,2.9vw,40px);
-  line-height:1.02; margin:4px 0 0; letter-spacing:-.045em; font-weight:800;
+  font-family:"DM Sans",sans-serif; white-space:nowrap;
+  font-size:clamp(26px,2.8vw,36px);
+  line-height:1.05; margin:2px 0 0; letter-spacing:-.03em; font-weight:800;
 }
-.title em{font-style:normal; color:var(--red)}
-.top-tools{display:flex; flex-direction:column; align-items:flex-end; gap:8px; flex:none}
-.lang{
-  font-size:11px; border:1px solid var(--line); background:#fff7ec;
-  padding:8px 12px; border-radius:999px; font-weight:800; color:var(--brown); letter-spacing:.04em;
-}
-.sound{
-  border:0; background:transparent; color:var(--muted);
-  font-size:11px; font-weight:700; letter-spacing:.04em;
-  padding:2px 2px; cursor:pointer;
-}
-.sound:hover{color:var(--ink)}
+.title em{font-style:normal; color:#E4022D}
 .stage{position:relative; display:grid; place-items:center; margin-top:8px; flex:1}
 .wheelbox{position:relative; width:min(100%,540px); aspect-ratio:1}
 .wheelshadow{
@@ -215,10 +204,9 @@ body::before{
 }
 .instruction{text-align:center; margin:10px 0 0; color:var(--muted); font-size:12.5px; letter-spacing:.01em}
 .right{padding:24px 22px 18px; display:flex; flex-direction:column; min-height:0}
-.bap{display:flex; align-items:center; gap:13px; padding-bottom:16px; border-bottom:1px solid var(--line)}
-.bap img{width:72px; height:72px; object-fit:contain; background:#f3ece3; border-radius:18px; padding:4px}
-.bap b{display:block; font-family:"Noto Serif KR",serif; font-size:20px; font-weight:800}
-.bap span{display:block; color:var(--muted); font-size:12px; margin-top:4px; line-height:1.5; font-family:"Noto Sans KR","DM Sans",sans-serif}
+.host{padding-bottom:16px; border-bottom:1px solid var(--line)}
+.host b{display:block; font-size:16px; font-weight:700; letter-spacing:-.02em}
+.host span{display:block; color:var(--muted); font-size:13px; margin-top:6px; line-height:1.5}
 .result{
   margin-top:16px; border-radius:22px; background:#302725; color:#fffaf1;
   padding:22px 18px; min-height:318px;
@@ -336,9 +324,8 @@ body::before{
 @media(max-width:600px){
   .left,.right{padding:16px}
   .top{flex-wrap:wrap}
-  .logo-area{flex-direction:column; align-items:flex-start; gap:8px}
-  .top-tools{flex-direction:row; align-items:center}
-  .brand-logo{width:104px}
+  .logo-area{flex-direction:column; align-items:flex-start; gap:10px}
+  .brand-logo{height:44px}
   .title{font-size:30px}
   .hub small{font-size:6px; letter-spacing:.1em}
   .pin.icon{top:53%}
@@ -369,15 +356,8 @@ body::before{
 <section class="card left">
   <div class="top">
     <div class="logo-area">
-      <img class="brand-logo" src="https://www.hansik.or.kr/files/static/images/kfpipr/hansik-bi-clean.png" alt="The Taste of Korea HANSIK">
-      <div>
-        <div class="kicker">K-FOOD POP-UP EXPERIENCE</div>
-        <div class="title">LUCKY <em>K-FOOD</em><br>ROULETTE</div>
-      </div>
-    </div>
-    <div class="top-tools">
-      <div class="lang">BRASIL · 2026</div>
-      <button class="sound" id="sound" type="button" aria-pressed="false">Som ligado</button>
+      <img class="brand-logo" src="assets/cccb-logo.svg" alt="Centro Cultural Coreano no Brasil">
+      <div class="title">Roleta <em>K-Food</em></div>
     </div>
   </div>
 
@@ -392,41 +372,35 @@ body::before{
       <div class="housing"></div>
       <div class="lacquer"></div>
       <div class="winlamp" id="winlamp"></div>
-      <div class="hub"><div><small>THE TASTE OF</small><br><strong>KOREA</strong></div></div>
+      <div class="hub"><div><strong>K-FOOD</strong></div></div>
     </div>
     <button class="spin" id="spin" type="button"><span class="dot"></span> <span id="spinLabel">RODAR A ROLETA</span></button>
-    <p class="instruction" id="instruction">Gire uma vez · descubra um K-Food · receba seu presente</p>
+    <p class="instruction" id="instruction">Uma vez por pessoa.</p>
   </div>
 </section>
 
 <aside class="card right">
-  <div class="bap">
-    <img src="https://www.hansik.or.kr/files/static/images/kfpipr/sub02_04_1.png" alt="밥돌 캐릭터">
-    <div><b>한국의 맛, 한눈에!</b><span>한식진흥원 공식 한식 브랜드의 색상 체계를 참고해<br>따뜻하고 전통적인 분위기로 구성했습니다.</span></div>
+  <div class="host">
+    <b>Uma rodada por pessoa</b>
+    <span>Gire a roleta, veja o prato e retire o brinde no balcão.</span>
   </div>
 
   <div class="result" id="result" aria-live="polite">
     <div class="result-in" id="resultIn">
       <div class="result-art" id="resultArt"></div>
-      <div class="result-kicker">YOUR K-FOOD</div>
+      <div class="result-kicker">SEU PRATO</div>
       <h2 id="resultName">Gire a roleta</h2>
-      <div class="pt" id="resultPt">Qual será o seu K-Food?</div>
-      <div class="explain" id="resultExplain">Cada resultado apresenta uma breve história e característica do prato.</div>
+      <div class="pt" id="resultPt">O prato e o brinde aparecem aqui.</div>
+      <div class="explain" id="resultExplain">Uma pessoa gira uma vez e retira o brinde no balcão.</div>
       <div class="prize" id="resultPrize">Todos os resultados ganham um presente</div>
     </div>
-  </div>
-
-  <div class="rules">
-    <div class="rule"><b>01 · RODAR</b><small>uma vez</small></div>
-    <div class="rule"><b>02 · DESCOBRIR</b><small>K-Food</small></div>
-    <div class="rule"><b>03 · GANHAR</b><small>presente imediato</small></div>
   </div>
 
   <div class="menu">
     <h3>MENU K-FOOD</h3>
     <div class="menu-grid" id="menuGrid"></div>
   </div>
-  <div class="footer">Conteúdo visual inspirado nos ativos oficiais de marca da Korean Food Promotion Institute (한식진흥원).<br>Para uso institucional/comercial, confirme previamente as condições de utilização dos ativos oficiais.</div>
+  <div class="footer">Centro Cultural Coreano no Brasil<br>Avenida Paulista, 460 – Bela Vista – São Paulo</div>
 </aside>
 </main>
 
@@ -441,21 +415,21 @@ body::before{
     </div>
     <div class="modal-desc" id="modalDesc"></div>
     <div class="modal-pt" id="modalPt"></div>
-    <div class="modal-prize"><span>SEU PRESENTE</span><strong id="modalPrize">K-Food Mini Gift</strong></div>
+    <div class="modal-prize"><span>SEU PRESENTE</span><strong id="modalPrize">Brinde</strong></div>
     <button class="close" id="close" type="button">FECHAR · PRÓXIMO PARTICIPANTE</button>
   </div>
 </div>
 
 <script>
 const foods=[
- {key:"kimchi",name:"KIMCHI",ko:"김치",pron:"김-치 · KIM-CHI",pt:"Um dos símbolos da mesa coreana.",desc:"Vegetais temperados e fermentados. O kimchi é um alimento tradicional que acompanha a refeição coreana e representa uma das culturas de fermentação mais conhecidas da Coreia.",prize:"K-Food Mini Gift"},
- {key:"gimbap",name:"GIMBAP",ko:"김밥",pron:"김-밥 · GIM-BAP",pt:"Arroz e ingredientes enrolados em alga.",desc:"Arroz e diversos ingredientes são enrolados em gim (alga) e cortados em rodelas. É uma comida prática, colorida e muito popular na vida cotidiana coreana.",prize:"K-Food Mini Gift"},
- {key:"mandu",name:"MANDU",ko:"만두",pron:"만-두 · MAN-DU",pt:"O tradicional dumpling coreano.",desc:"Mandu são dumplings recheados, preparados de diferentes maneiras, como cozidos, no vapor ou grelhados. São encontrados tanto em refeições quanto em momentos festivos.",prize:"K-Food Mini Gift"},
- {key:"gochujang",name:"GOCHUJANG",ko:"고추장",pron:"고-추-장 · GO-CHU-JANG",pt:"Pasta fermentada de pimenta vermelha.",desc:"Um dos tradicionais jang coreanos. Feito com ingredientes fermentados, o gochujang acrescenta sabor, cor e umami a muitos pratos coreanos.",prize:"K-Food Set"},
- {key:"tteokbokki",name:"TTEOKBOKKI",ko:"떡볶이",pron:"떡-뽀-끼 · TTEOK-BBO-KKI",pt:"O famoso snack coreano de arroz.",desc:"Bolinhos de arroz cozidos em um molho marcante. É um dos alimentos de rua mais conhecidos da Coreia e ganhou popularidade internacional.",prize:"K-Food Mini Gift"},
- {key:"bulgogi",name:"BULGOGI",ko:"불고기",pron:"불-고-기 · BUL-GO-GI",pt:"Carne marinada e grelhada ao estilo coreano.",desc:"Fatias finas de carne são marinadas e cozidas ou grelhadas com um tempero à base de molho de soja e outros ingredientes. É um dos pratos coreanos mais conhecidos no exterior.",prize:"K-Food Set"},
- {key:"bibimbap",name:"BIBIMBAP",ko:"비빔밥",pron:"비-빔-밥 · BI-BIM-BAP",pt:"Arroz misturado com diversos ingredientes.",desc:"Arroz servido com vegetais variados, ingredientes complementares e, muitas vezes, ovo e gochujang. A combinação de cores e sabores é uma de suas características marcantes.",prize:"K-Food Mini Gift"},
- {key:"special",name:"SPECIAL",ko:"특별 경품",pron:"스-페-셜 · SPECIAL",pt:"Parabéns! Você encontrou o prêmio especial.",desc:"Uma casa especial da roleta. Além de descobrir um elemento da cultura alimentar coreana, você recebe a premiação especial preparada para o K-Food Pop-up.",prize:"SPECIAL GIFT"}
+ {key:"kimchi",name:"KIMCHI",ko:"김치",pron:"김-치 · KIM-CHI",pt:"Um dos símbolos da mesa coreana.",desc:"Vegetais temperados e fermentados. O kimchi é um alimento tradicional que acompanha a refeição coreana e representa uma das culturas de fermentação mais conhecidas da Coreia.",prize:"Brinde"},
+ {key:"gimbap",name:"GIMBAP",ko:"김밥",pron:"김-밥 · GIM-BAP",pt:"Arroz e ingredientes enrolados em alga.",desc:"Arroz e diversos ingredientes são enrolados em gim (alga) e cortados em rodelas. É uma comida prática, colorida e muito popular na vida cotidiana coreana.",prize:"Brinde"},
+ {key:"mandu",name:"MANDU",ko:"만두",pron:"만-두 · MAN-DU",pt:"O tradicional dumpling coreano.",desc:"Mandu são dumplings recheados, preparados de diferentes maneiras, como cozidos, no vapor ou grelhados. São encontrados tanto em refeições quanto em momentos festivos.",prize:"Brinde"},
+ {key:"gochujang",name:"GOCHUJANG",ko:"고추장",pron:"고-추-장 · GO-CHU-JANG",pt:"Pasta fermentada de pimenta vermelha.",desc:"Um dos tradicionais jang coreanos. Feito com ingredientes fermentados, o gochujang acrescenta sabor, cor e umami a muitos pratos coreanos.",prize:"Kit"},
+ {key:"tteokbokki",name:"TTEOKBOKKI",ko:"떡볶이",pron:"떡-뽀-끼 · TTEOK-BBO-KKI",pt:"O famoso snack coreano de arroz.",desc:"Bolinhos de arroz cozidos em um molho marcante. É um dos alimentos de rua mais conhecidos da Coreia e ganhou popularidade internacional.",prize:"Brinde"},
+ {key:"bulgogi",name:"BULGOGI",ko:"불고기",pron:"불-고-기 · BUL-GO-GI",pt:"Carne marinada e grelhada ao estilo coreano.",desc:"Fatias finas de carne são marinadas e cozidas ou grelhadas com um tempero à base de molho de soja e outros ingredientes. É um dos pratos coreanos mais conhecidos no exterior.",prize:"Kit"},
+ {key:"bibimbap",name:"BIBIMBAP",ko:"비빔밥",pron:"비-빔-밥 · BI-BIM-BAP",pt:"Arroz misturado com diversos ingredientes.",desc:"Arroz servido com vegetais variados, ingredientes complementares e, muitas vezes, ovo e gochujang. A combinação de cores e sabores é uma de suas características marcantes.",prize:"Brinde"},
+ {key:"special",name:"PRÊMIO",ko:"Especial",pron:"PRÊMIO · SPECIAL",pt:"Você encontrou o prêmio especial.",desc:"Esta casa vale o brinde especial preparado para a atividade do Centro Cultural Coreano no Brasil.",prize:"Brinde especial"}
 ];
 
 function svgFood(key){
@@ -508,25 +482,12 @@ const resultIn=document.getElementById("resultIn");
 const wheelbox=document.getElementById("wheelbox");
 const pointer=document.getElementById("pointer");
 const instruction=document.getElementById("instruction");
-const soundBtn=document.getElementById("sound");
 const modal=document.getElementById("modal");
 const modalCard=document.getElementById("modalCard");
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-let rot=0, state="ready", muted=sessionStorage.getItem("kfood-sound")==="0";
+let rot=0, state="ready", muted=false;
 let audioCtx=null, tickBuf=null, lastPeg=-1, lastTickAt=0, raf=0;
-
-function syncSound(){
- soundBtn.textContent=muted?"Som desligado":"Som ligado";
- soundBtn.setAttribute("aria-pressed", muted?"true":"false");
-}
-syncSound();
-soundBtn.addEventListener("click",()=>{
- muted=!muted;
- sessionStorage.setItem("kfood-sound", muted?"0":"1");
- syncSound();
- if(!muted) ensureAudio();
-});
 
 function ensureAudio(){
  const AC=window.AudioContext||window.webkitAudioContext;
@@ -602,8 +563,8 @@ function showResult(f){
 function resetResult(){
  document.getElementById("resultArt").innerHTML="";
  document.getElementById("resultName").textContent="Gire a roleta";
- document.getElementById("resultPt").textContent="Qual será o seu K-Food?";
- document.getElementById("resultExplain").textContent="Cada resultado apresenta uma breve história e característica do prato.";
+ document.getElementById("resultPt").textContent="O prato e o brinde aparecem aqui.";
+ document.getElementById("resultExplain").textContent="Uma pessoa gira uma vez e retira o brinde no balcão.";
  document.getElementById("resultPrize").textContent="Todos os resultados ganham um presente";
  result.classList.remove("special","flash");
  menuItems.forEach(el=>el.classList.remove("on"));
