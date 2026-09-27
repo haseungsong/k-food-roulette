@@ -113,23 +113,10 @@ body::before{
   position:absolute; left:0; width:max-content;
   transform:translate(-50%,-50%);
 }
-.pin.icon{top:52%}
-.pin.label{top:27%}
-.pin.icon svg{width:76px; height:62px; display:block; filter:drop-shadow(0 2px 1px rgba(59,40,30,.16))}
-.food-label{
-  padding:3px 7px 4px; border-radius:999px;
-  background:rgba(255,250,241,.95);
-  border:1px solid rgba(74,59,54,.14);
-  box-shadow:0 2px 5px rgba(59,40,30,.08);
-  text-align:center; line-height:1.05;
-}
-.food-label .kr{
-  display:block; font-family:"Noto Serif KR",serif;
-  font-size:11px; font-weight:800; letter-spacing:-.03em; color:#3c302c;
-}
-.food-label .roman{
-  display:block; margin-top:1px; font-size:8px; font-weight:800;
-  letter-spacing:.05em; color:#8d7568;
+.pin.food{top:30%}
+.pin.food img{
+  width:86px; height:auto; display:block;
+  filter:drop-shadow(0 3px 2px rgba(48,32,24,.22));
 }
 .lacquer{
   position:absolute; inset:4.2%; border-radius:50%; z-index:5; pointer-events:none;
@@ -224,8 +211,8 @@ body::before{
   transition:opacity .32s ease, transform .32s ease;
 }
 .result-in.hide{opacity:0; transform:translateY(6px)}
-.result-art{width:132px; height:108px}
-.result-art svg,.modal-art svg,.menu-art svg{width:100%; height:100%; display:block}
+.result-art{width:150px; height:186px}
+.result-art img,.modal-art img,.menu-art img{width:100%; height:100%; display:block; object-fit:contain}
 .result-kicker{font-size:10px; letter-spacing:.18em; color:#d9c9b7; font-weight:800; margin-top:4px}
 .result h2{font-family:"Noto Serif KR",serif; font-size:34px; margin:4px 0 0; letter-spacing:-.03em; font-weight:800}
 .result .pt{font-size:13px; color:#f2d69c; font-weight:700; margin-top:2px}
@@ -250,7 +237,7 @@ body::before{
   transition:border-color .25s ease, background .25s ease;
 }
 .menu-item.on{border-color:#c6a15a; background:#fff6e2}
-.menu-art{width:36px; height:36px; flex:none}
+.menu-art{width:48px; height:60px; flex:none}
 .menu-item b{font-size:11px; letter-spacing:.02em}
 .menu-item span{display:block; color:var(--muted); font-size:10px; margin-top:1px; font-family:"Noto Serif KR",serif}
 .footer{margin-top:auto; padding-top:14px; text-align:center; color:#9a8b80; font-size:10px; line-height:1.55}
@@ -272,7 +259,7 @@ body::before{
   background:#efe4cf; z-index:0;
 }
 .modal-top{display:flex; gap:16px; align-items:center; position:relative; z-index:1}
-.modal-art{width:140px; height:118px; flex:none}
+.modal-art{width:168px; height:210px; flex:none}
 .modal.show .modal-art{animation:rise .5s cubic-bezier(.16,1,.3,1) both}
 .modal-label{font-size:10px; letter-spacing:.16em; color:var(--red); font-weight:800}
 .modal h2{font-family:"Noto Serif KR",serif; font-size:40px; margin:2px 0 0; letter-spacing:-.03em; line-height:1; font-weight:800}
@@ -328,19 +315,12 @@ body::before{
   .brand-logo{height:44px}
   .title{font-size:30px}
   .hub small{font-size:6px; letter-spacing:.1em}
-  .pin.icon{top:53%}
-  .pin.label{top:28%}
-  .pointer-wrap{width:44px; height:60px; top:-6px}
-  .pointer{left:5px; top:10px; width:34px; height:46px}
-  .pointer:after{left:6px; top:4px; width:22px; height:30px}
-  .pin.icon svg{width:58px; height:48px}
-  .food-label .kr{font-size:9px}
-  .food-label .roman{font-size:7px}
+  .pin.food{top:32%}
+  .pin.food img{width:64px}
   .hub{width:72px; height:72px}
   .hub strong{font-size:14px}
-  .rules{grid-template-columns:1fr}
   .modal-top{align-items:flex-start}
-  .modal-art{width:96px; height:84px}
+  .modal-art{width:120px; height:150px}
   .modal h2{font-size:30px}
   .modal-card{padding:20px}
   .result{min-height:280px}
@@ -445,9 +425,8 @@ function svgFood(key){
  return `<svg ${common}>${bg}<circle cx="80" cy="62" r="40" fill="#f2d37a" stroke="#594c49" stroke-width="4"/><path d="M80 30v64M48 44l64 36M112 44L48 80" stroke="#9d3f36" stroke-width="5"/><circle cx="80" cy="62" r="8" fill="#fffaf1"/></svg>`;
 }
 
-function romanOf(f){
- const parts=f.pron.split(" · ");
- return parts[1]||f.name;
+function foodArt(key){
+ return `<img src="assets/foods/${key}.png" alt="">`;
 }
 
 const wheel=document.getElementById("wheel");
@@ -466,11 +445,11 @@ foods.forEach((f,i)=>{
  const seg=document.createElement("div");
  seg.className="segment";
  seg.style.setProperty("--a",(i*45)+"deg");
- seg.innerHTML=`<div class="arm"><div class="pin label"><div class="food-label"><span class="kr">${f.ko}</span><span class="roman">${romanOf(f)}</span></div></div><div class="pin icon">${svgFood(f.key)}</div></div>`;
+ seg.innerHTML=`<div class="arm"><div class="pin food">${foodArt(f.key)}</div></div>`;
  wheel.appendChild(seg);
  const item=document.createElement("div");
  item.className="menu-item";
- item.innerHTML=`<div class="menu-art">${svgFood(f.key)}</div><div><b>${f.name}</b><span>${f.ko}</span></div>`;
+ item.innerHTML=`<div class="menu-art">${foodArt(f.key)}</div><div><b>${f.name}</b><span>${f.ko}</span></div>`;
  menuGrid.appendChild(item);
  menuItems.push(item);
 });
@@ -552,7 +531,7 @@ function setWheel(deg){
  wheel.style.transform=`rotate(${deg}deg)`;
 }
 function showResult(f){
- document.getElementById("resultArt").innerHTML=svgFood(f.key);
+ document.getElementById("resultArt").innerHTML=foodArt(f.key);
  document.getElementById("resultName").textContent=f.name;
  document.getElementById("resultPt").textContent=f.pt;
  document.getElementById("resultExplain").textContent=f.desc;
@@ -570,7 +549,7 @@ function resetResult(){
  menuItems.forEach(el=>el.classList.remove("on"));
 }
 function openModal(f){
- document.getElementById("modalArt").innerHTML=svgFood(f.key);
+ document.getElementById("modalArt").innerHTML=foodArt(f.key);
  document.getElementById("modalName").innerHTML=`${f.name}<small>${f.ko}</small>`;
  document.getElementById("modalDesc").textContent=f.desc;
  document.getElementById("modalPt").textContent=f.pt+"  "+f.pron;
