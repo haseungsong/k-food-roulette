@@ -308,23 +308,28 @@ body::before{
   .app{grid-template-columns:1fr; padding:14px}
   .wheelbox{width:min(100%,520px)}
 }
-@media(max-width:600px){
-  .left,.right{padding:16px}
-  .top{flex-wrap:wrap}
-  .logo-area{flex-direction:column; align-items:flex-start; gap:10px}
-  .brand-logo{height:44px}
-  .title{font-size:30px}
-  .hub small{font-size:6px; letter-spacing:.1em}
-  .pin.food{top:32%}
-  .pin.food img{width:64px}
-  .hub{width:72px; height:72px}
-  .hub strong{font-size:14px}
-  .modal-top{align-items:flex-start}
-  .modal-art{width:120px; height:150px}
-  .modal h2{font-size:30px}
-  .modal-card{padding:20px}
-  .result{min-height:280px}
+@media(max-width:700px){
+  .app{padding:8px; gap:10px}
+  .left,.right{padding:12px 12px 14px}
+  .logo-area{flex-direction:row; align-items:center; gap:10px}
+  .brand-logo{height:34px}
+  .title{font-size:22px}
+  .stage{margin-top:2px}
+  .wheelbox{width:min(100%, calc(100dvh - 230px), 420px)}
+  .pin.food{top:31%}
+  .pin.food img{width:58px}
+  .hub{width:64px; height:64px}
+  .hub strong{font-size:13px}
+  .spin{width:100%; min-width:0; margin-top:10px; padding:14px 16px}
+  .instruction{margin-top:6px}
+  .result{min-height:0; margin-top:10px; padding:16px 14px}
   .result h2{font-size:28px}
+  .explain{font-size:12px}
+  .menu,.footer{display:none}
+  .modal-top{align-items:flex-start}
+  .modal-art{width:110px; height:140px}
+  .modal h2{font-size:28px}
+  .modal-card{padding:18px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important; transition:none !important}

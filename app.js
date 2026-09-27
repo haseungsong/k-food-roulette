@@ -3,37 +3,82 @@ const RADIO_GROUPS = ["age", "gender", "region", "awareness", "favorite", "frequ
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtxK-MAvafa0jWXjX90M9ElP0VIc5QviW9XXSvzjFvQH6y6ql9sfJEXOhYHpJSh5HlcQ/exec";
 
+const steps = [[1], [2, 3], [4], [5], [6], [7], [8], [9]];
+let stepIndex = 0;
+let moving = false;
+
 function startSurvey() {
     document.getElementById("introScreen").classList.add("hidden");
     document.getElementById("surveyScreen").classList.remove("hidden");
     document.getElementById("progressArea").classList.remove("hidden");
-    updateProgress();
+    stepIndex = 0;
+    showStep();
 }
 
-function countAnswered() {
-    let count = 0;
-    for (const name of RADIO_GROUPS) {
-        if (document.querySelector(`input[name="${name}"]:checked`)) count++;
-    }
-    if (document.querySelector('input[name="foods"]:checked')) count++;
-    return count;
-}
+function showStep() {
+    const current = new Set(steps[stepIndex]);
+    document.querySelectorAll(".question-card").forEach((card) => {
+        card.classList.toggle("active", current.has(Number(card.dataset.question)));
+    });
 
-function updateProgress() {
-    const done = countAnswered();
-    const current = Math.min(TOTAL_QUESTIONS, done + 1);
-    const percent = Math.round((done / TOTAL_QUESTIONS) * 100);
+    const first = steps[stepIndex][0];
+    const last = steps[stepIndex][steps[stepIndex].length - 1];
+    const label = first === last
+        ? `Pergunta ${first} de 9`
+        : `Perguntas ${first}–${last} de 9`;
+    const percent = Math.round((stepIndex / steps.length) * 100);
 
-    document.getElementById("progressText").textContent =
-        `Pergunta ${current} de ${TOTAL_QUESTIONS}`;
+    document.getElementById("progressText").textContent = label;
     document.getElementById("progressPercent").textContent = `${percent}%`;
     document.getElementById("progressFill").style.width = `${percent}%`;
+    document.getElementById("backButton").classList.toggle("hidden", stepIndex === 0);
+    document.getElementById("nextButton").classList.toggle("hidden", !current.has(5));
+    document.getElementById("submitButton").classList.toggle("hidden", !current.has(9));
+    window.scrollTo(0, 0);
 }
 
-document.addEventListener("change", function (event) {
-    if (event.target.matches('input[type="radio"], input[type="checkbox"]')) {
-        updateProgress();
+function stepAnswered() {
+    return steps[stepIndex].every((number) => {
+        return document.querySelector(`[data-question="${number}"] input:checked`);
+    });
+}
+
+function goNext() {
+    if (moving || stepIndex >= steps.length - 1) return;
+    if (!stepAnswered()) {
+        showError("Escolha uma opção para continuar.");
+        return;
     }
+    moving = true;
+    stepIndex += 1;
+    showStep();
+    setTimeout(() => { moving = false; }, 280);
+}
+
+document.getElementById("backButton").addEventListener("click", () => {
+    if (stepIndex === 0) return;
+    stepIndex -= 1;
+    showStep();
+});
+
+document.getElementById("nextButton").addEventListener("click", goNext);
+
+document.addEventListener("change", function (event) {
+    const input = event.target;
+    if (input.name === "foods") {
+        const boxes = [...document.querySelectorAll('input[name="foods"]')];
+        if (input.value === "Nenhuma" && input.checked) {
+            boxes.forEach((box) => { if (box !== input) box.checked = false; });
+        } else if (input.checked) {
+            boxes.forEach((box) => { if (box.value === "Nenhuma") box.checked = false; });
+        }
+        return;
+    }
+
+    if (!input.matches('input[type="radio"]')) return;
+    if (steps[stepIndex].includes(9)) return;
+    if (steps[stepIndex].includes(5)) return;
+    if (stepAnswered()) setTimeout(goNext, 180);
 });
 
 function validateSurvey() {

@@ -84,7 +84,7 @@
                 </div>
             </section>
 
-            <section class="question-card" data-question="5">
+            <section class="question-card cols-2" data-question="5">
                 <div class="question-number">05</div>
                 <h2>Quais comidas coreanas você já experimentou?</h2>
                 <p class="question-help">Você pode selecionar mais de uma opção.</p>
@@ -100,7 +100,7 @@
                 </div>
             </section>
 
-            <section class="question-card" data-question="6">
+            <section class="question-card cols-2" data-question="6">
                 <div class="question-number">06</div>
                 <h2>Qual comida coreana você teria mais vontade de experimentar?</h2>
                 <p class="question-help">Escolha apenas uma opção.</p>
@@ -153,7 +153,12 @@
                 </div>
             </section>
 
-            <button type="button" id="submitButton" class="primary-button submit-button" onclick="submitSurvey()">
+            <div class="step-nav">
+                <button type="button" id="backButton" class="primary-button ghost hidden">Voltar</button>
+                <button type="button" id="nextButton" class="primary-button hidden">Continuar</button>
+            </div>
+
+            <button type="button" id="submitButton" class="primary-button submit-button hidden" onclick="submitSurvey()">
                 Enviar pesquisa
             </button>
         </form>

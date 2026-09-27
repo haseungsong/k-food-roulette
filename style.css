@@ -109,12 +109,36 @@ body {
 }
 
 .question-card {
+    display: none;
     background: white;
     border-radius: 18px;
     padding: 22px;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
     border: 1px solid var(--border);
-    box-shadow: 0 5px 18px rgba(0,0,0,.05);
+}
+
+.question-card.active {
+    display: block;
+}
+
+.cols-2 .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.step-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.step-nav .primary-button {
+    flex: 1;
+}
+
+.primary-button.ghost {
+    background: #fff;
+    color: var(--navy);
+    border: 1px solid var(--border);
 }
 
 .question-number {
@@ -292,14 +316,23 @@ body {
     z-index: 999;
 }
 
-@media (max-width: 480px) {
-    .header { padding: 16px; }
-    .header h1 { font-size: 20px; }
-    .header p { font-size: 13px; }
-    .screen { padding: 14px; }
-    .question-card { padding: 18px; }
-    .question-card h2 { font-size: 18px; }
-    .options label { min-height: 50px; padding: 10px 12px; }
+@media (max-width: 700px) {
+    body { min-height: 100dvh; }
+    .app { padding-bottom: 16px; }
+    .header { padding: 12px 14px 8px; }
+    .brand-logo { height: 36px; }
+    .header p { margin-top: 6px; font-size: 12px; }
+    .progress-area { padding: 10px 14px 8px; }
+    .screen { padding: 12px; }
+    #introScreen { padding-top: 24px; }
+    #introScreen h2 { font-size: 24px; margin-bottom: 12px; }
+    .privacy { margin: 12px auto 20px; }
+    .question-number { display: none; }
+    .question-card { padding: 14px; margin-bottom: 8px; }
+    .question-card h2 { font-size: 18px; margin-bottom: 10px; }
+    .options { gap: 7px; }
+    .options label { min-height: 44px; padding: 8px 10px; }
     .options span { font-size: 15px; }
-    .rating span { width: 43px; height: 43px; }
+    .rating span { width: 42px; height: 42px; }
+    .success-screen { padding-top: 36px; }
 }
