@@ -95,13 +95,7 @@ async function submitSurvey() {
         if (GOOGLE_SCRIPT_URL.includes("COLOQUE_AQUI")) {
             saveLocal(data);
         } else {
-            const body = new URLSearchParams();
-            Object.entries(data).forEach(([key, value]) => body.append(key, String(value)));
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                body
-            });
+            await postToSheet(data);
             saveLocal(data);
         }
         showSuccess();
@@ -110,6 +104,33 @@ async function submitSurvey() {
         saveLocal(data);
         showSuccess();
     }
+}
+
+function postToSheet(data) {
+    return new Promise((resolve) => {
+        const iframe = document.createElement("iframe");
+        iframe.name = "kfood-sheet";
+        iframe.hidden = true;
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = GOOGLE_SCRIPT_URL;
+        form.target = iframe.name;
+        Object.entries(data).forEach(([key, value]) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = String(value);
+            form.appendChild(input);
+        });
+        document.body.appendChild(iframe);
+        document.body.appendChild(form);
+        form.submit();
+        setTimeout(() => {
+            form.remove();
+            iframe.remove();
+            resolve();
+        }, 2500);
+    });
 }
 
 function saveLocal(data) {

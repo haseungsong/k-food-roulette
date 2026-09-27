@@ -1,10 +1,13 @@
+const SHEET_ID = "1b_LMC8maxvSW2uKKHtpxo9lwOc3bL4CVnDB2ujILprQ";
+
 function doGet() {
   return ContentService.createTextOutput("ok");
 }
 
 function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-  const data = e.parameter || {};
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const sheet = ss.getSheetByName("Survey") || ss.getSheets()[0];
+  const data = (e && e.parameter) || {};
 
   if (sheet.getLastRow() === 0) {
     sheet.appendRow([
@@ -34,7 +37,5 @@ function doPost(e) {
     data.interest || ""
   ]);
 
-  return ContentService
-    .createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput("ok");
 }
