@@ -366,7 +366,7 @@ body::before{
 <aside class="card right">
   <div class="host">
     <b>Uma rodada por pessoa</b>
-    <span>Gire uma vez. Mostre o resultado e retire o broche do prato.</span>
+    <span>Gire uma vez. Mostre o resultado e retire este broche.</span>
   </div>
 
   <div class="result" id="result" aria-live="polite">
@@ -374,7 +374,7 @@ body::before{
       <div class="result-art" id="resultArt"></div>
       <div class="result-kicker">SEU PRATO</div>
       <h2 id="resultName">Gire a roleta</h2>
-      <div class="pt" id="resultPt">O broche do prato aparece aqui.</div>
+      <div class="pt" id="resultPt">O broche aparece aqui.</div>
       <div class="explain" id="resultExplain">Mostre o resultado para a equipe e retire o broche redondo.</div>
       <div class="prize" id="resultPrize">Todos ganham um broche redondo</div>
     </div>
@@ -399,21 +399,21 @@ body::before{
     </div>
     <div class="modal-desc" id="modalDesc"></div>
     <div class="modal-pt" id="modalPt"></div>
-    <div class="modal-prize"><span>SEU BROCHE</span><strong id="modalPrize">Broche do prato</strong></div>
+    <div class="modal-prize"><span>SEU BROCHE</span><strong id="modalPrize">Este broche</strong></div>
     <button class="close" id="close" type="button">FECHAR · PRÓXIMO PARTICIPANTE</button>
   </div>
 </div>
 
 <script>
 const foods=[
- {key:"kimchi",name:"KIMCHI",ko:"김치",pron:"김-치 · KIM-CHI",pt:"Um dos símbolos da mesa coreana.",desc:"Vegetais temperados e fermentados. O kimchi é um alimento tradicional que acompanha a refeição coreana e representa uma das culturas de fermentação mais conhecidas da Coreia.",prize:"Mostre o resultado e retire o broche deste prato."},
- {key:"gimbap",name:"GIMBAP",ko:"김밥",pron:"김-밥 · GIM-BAP",pt:"Arroz e ingredientes enrolados em alga.",desc:"Arroz e diversos ingredientes são enrolados em gim (alga) e cortados em rodelas. É uma comida prática, colorida e muito popular na vida cotidiana coreana.",prize:"Mostre o resultado e retire o broche deste prato."},
- {key:"mandu",name:"MANDU",ko:"만두",pron:"만-두 · MAN-DU",pt:"O tradicional dumpling coreano.",desc:"Mandu são dumplings recheados, preparados de diferentes maneiras, como cozidos, no vapor ou grelhados. São encontrados tanto em refeições quanto em momentos festivos.",prize:"Mostre o resultado e retire o broche deste prato."},
- {key:"japchae",name:"JAPCHAE",ko:"잡채",pron:"잡-채 · JAP-CHAE",pt:"Macarrão de batata-doce com legumes.",desc:"Fios de batata-doce salteados com legumes. É um prato colorido, servido tanto no dia a dia quanto em ocasiões especiais.",prize:"Mostre o resultado e retire o broche deste prato."},
- {key:"tteokbokki",name:"TTEOKBOKKI",ko:"떡볶이",pron:"떡-뽀-끼 · TTEOK-BBO-KKI",pt:"O famoso snack coreano de arroz.",desc:"Bolinhos de arroz cozidos em um molho marcante. É um dos alimentos de rua mais conhecidos da Coreia e ganhou popularidade internacional.",prize:"Mostre o resultado e retire o broche deste prato."},
- {key:"bulgogi",name:"BULGOGI",ko:"불고기",pron:"불-고-기 · BUL-GO-GI",pt:"Carne marinada e grelhada ao estilo coreano.",desc:"Fatias finas de carne são marinadas e cozidas ou grelhadas com um tempero à base de molho de soja e outros ingredientes. É um dos pratos coreanos mais conhecidos no exterior.",prize:"Mostre o resultado e retire o broche deste prato."},
- {key:"bibimbap",name:"BIBIMBAP",ko:"비빔밥",pron:"비-빔-밥 · BI-BIM-BAP",pt:"Arroz misturado com diversos ingredientes.",desc:"Arroz servido com vegetais variados, ingredientes complementares e, muitas vezes, ovo. A combinação de cores e sabores é uma de suas características marcantes.",prize:"Mostre o resultado e retire o broche deste prato."},
- {key:"special",name:"PRÊMIO",ko:"Especial",pron:"PRÊMIO · SPECIAL",pt:"Você encontrou o broche especial.",desc:"Mostre esta tela para a equipe. O broche especial é entregue na hora.",prize:"Mostre para a equipe e retire o broche especial."}
+ {key:"mandu",name:"MANDU",ko:"만두",pron:"만-두 · MAN-DU",pt:"O dumpling coreano.",desc:"Massa recheada, cozida no vapor ou frita. O mandu aparece tanto nas refeições do dia a dia quanto em celebrações.",prize:"Mostre o resultado e retire este broche."},
+ {key:"ramyeon",name:"RAMYEON",ko:"라면",pron:"라-면 · RA-MYEON",pt:"O macarrão coreano de preparo rápido.",desc:"Macarrão em um caldo quente, com ingredientes por cima. É uma comida muito presente no cotidiano da Coreia.",prize:"Mostre o resultado e retire este broche."},
+ {key:"soju",name:"SOJU",ko:"소주",pron:"소-주 · SO-JU",pt:"A bebida destilada mais conhecida da Coreia.",desc:"Bebida transparente, servida em copos pequenos. O soju acompanha refeições e encontros entre amigos.",prize:"Mostre o resultado e retire este broche."},
+ {key:"tteok",name:"TTEOK",ko:"떡",pron:"떡 · TTEOK",pt:"O bolo de arroz coreano.",desc:"Feito de arroz, o tteok aparece em festas, feriados e também como lanche. As cores e os formatos variam.",prize:"Mostre o resultado e retire este broche."},
+ {key:"doenjang",name:"DOENJANG",ko:"된장",pron:"된-장 · DOEN-JANG",pt:"A pasta fermentada de soja.",desc:"Um dos temperos básicos da cozinha coreana. O doenjang dá sabor e profundidade a sopas e refogados.",prize:"Mostre o resultado e retire este broche."},
+ {key:"ganjang",name:"GANJANG",ko:"간장",pron:"간-장 · GAN-JANG",pt:"O molho de soja coreano.",desc:"Feito com soja fermentada, o ganjang tempera marinadas, caldos e muitos pratos do dia a dia.",prize:"Mostre o resultado e retire este broche."},
+ {key:"gimbap",name:"GIMBAP",ko:"김밥",pron:"김-밥 · GIM-BAP",pt:"Arroz e ingredientes enrolados em alga.",desc:"Arroz e recheios coloridos são enrolados em gim e cortados em rodelas. É uma comida prática e muito popular.",prize:"Mostre o resultado e retire este broche."},
+ {key:"hanbok",name:"HANBOK",ko:"한복",pron:"한-복 · HAN-BOK",pt:"A roupa tradicional coreana.",desc:"O hanbok é usado em festas, cerimônias e celebrações. As cores e o corte fazem parte da cultura coreana.",prize:"Mostre o resultado e retire este broche."}
 ];
 
 function svgFood(key){
@@ -546,7 +546,7 @@ function showResult(f){
 function resetResult(){
  document.getElementById("resultArt").innerHTML="";
  document.getElementById("resultName").textContent="Gire a roleta";
- document.getElementById("resultPt").textContent="O broche do prato aparece aqui.";
+ document.getElementById("resultPt").textContent="O broche aparece aqui.";
  document.getElementById("resultExplain").textContent="Mostre o resultado para a equipe e retire o broche redondo.";
  document.getElementById("resultPrize").textContent="Todos ganham um broche redondo";
  result.classList.remove("special","flash");
