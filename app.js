@@ -1,10 +1,10 @@
-const TOTAL_QUESTIONS = 9;
-const RADIO_GROUPS = ["age", "gender", "region", "awareness", "frequency", "purchase", "interest"];
+const TOTAL_QUESTIONS = 11;
+const RADIO_GROUPS = ["age", "gender", "region", "awareness", "frequency", "purchase", "interest", "event", "kfoodEvent"];
 const MULTI_STEPS = new Set([5, 6]);
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtxK-MAvafa0jWXjX90M9ElP0VIc5QviW9XXSvzjFvQH6y6ql9sfJEXOhYHpJSh5HlcQ/exec";
 
-const steps = [[1], [2, 3], [4], [5], [6], [7], [8], [9]];
+const steps = [[1], [2, 3], [4], [5], [6], [7], [8], [9], [10], [11]];
 let stepIndex = 0;
 let moving = false;
 
@@ -25,8 +25,8 @@ function showStep() {
     const first = steps[stepIndex][0];
     const last = steps[stepIndex][steps[stepIndex].length - 1];
     const label = first === last
-        ? `Pergunta ${first} de 9`
-        : `Perguntas ${first}–${last} de 9`;
+        ? `Pergunta ${first} de ${TOTAL_QUESTIONS}`
+        : `Perguntas ${first}–${last} de ${TOTAL_QUESTIONS}`;
     const percent = Math.round((stepIndex / steps.length) * 100);
 
     document.getElementById("progressText").textContent = label;
@@ -34,7 +34,7 @@ function showStep() {
     document.getElementById("progressFill").style.width = `${percent}%`;
     document.getElementById("backButton").classList.toggle("hidden", stepIndex === 0);
     document.getElementById("nextButton").classList.toggle("hidden", !steps[stepIndex].some((n) => MULTI_STEPS.has(n)));
-    document.getElementById("submitButton").classList.toggle("hidden", !current.has(9));
+    document.getElementById("submitButton").classList.toggle("hidden", !current.has(11));
     window.scrollTo(0, 0);
 }
 
@@ -77,7 +77,7 @@ document.addEventListener("change", function (event) {
     }
 
     if (!input.matches('input[type="radio"]')) return;
-    if (steps[stepIndex].includes(9)) return;
+    if (steps[stepIndex].includes(11)) return;
     if (steps[stepIndex].some((n) => MULTI_STEPS.has(n))) return;
     if (stepAnswered()) setTimeout(goNext, 180);
 });
@@ -132,7 +132,9 @@ function collectSurveyData() {
         favorite: Array.from(document.querySelectorAll('input[name="favorite"]:checked')).map((element) => element.value).join(", "),
         frequency: getRadio("frequency"),
         purchase: getRadio("purchase"),
-        interest: Number(getRadio("interest"))
+        interest: Number(getRadio("interest")),
+        event: getRadio("event"),
+        kfoodEvent: getRadio("kfoodEvent")
     };
 }
 

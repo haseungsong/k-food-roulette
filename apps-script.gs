@@ -20,8 +20,12 @@ function doPost(e) {
       "favorite",
       "frequency",
       "purchase",
-      "interest"
+      "interest",
+      "event",
+      "kfood_event"
     ]);
+  } else if (!sheet.getRange(1, 11).getValue()) {
+    sheet.getRange(1, 11, 1, 2).setValues([["event", "kfood_event"]]);
   }
 
   sheet.appendRow([
@@ -34,7 +38,9 @@ function doPost(e) {
     data.favorite || "",
     data.frequency || "",
     data.purchase || "",
-    data.interest || ""
+    data.interest || "",
+    data.event || "",
+    data.kfoodEvent || ""
   ]);
 
   return ContentService.createTextOutput("ok");
