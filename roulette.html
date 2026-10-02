@@ -283,6 +283,8 @@ body::before{
   margin-top:14px; width:100%; border:0; border-radius:14px; padding:13px;
   background:#e7dccb; color:#392d28; font-weight:800; cursor:pointer; position:relative; z-index:1; letter-spacing:.02em;
 }
+.close:disabled{opacity:.45; cursor:default}
+.close:disabled:active{transform:none}
 .close:hover{background:#ded1bd}
 .close:active{transform:translateY(1px)}
 .flake{
@@ -400,7 +402,7 @@ body::before{
     <div class="modal-desc" id="modalDesc"></div>
     <div class="modal-pt" id="modalPt"></div>
     <div class="modal-prize"><span>SEU BROCHE</span><strong id="modalPrize">Este broche</strong></div>
-    <button class="close" id="close" type="button">FECHAR · PRÓXIMO PARTICIPANTE</button>
+    <button class="close" id="close" type="button" disabled>FECHAR</button>
   </div>
 </div>
 
@@ -552,6 +554,24 @@ function resetResult(){
  result.classList.remove("special","flash");
  menuItems.forEach(el=>el.classList.remove("on"));
 }
+let closeTimer=0;
+function armClose(){
+ const closeBtn=document.getElementById("close");
+ let left=5;
+ closeBtn.disabled=true;
+ closeBtn.textContent=`FECHAR · ${left}`;
+ clearInterval(closeTimer);
+ closeTimer=setInterval(()=>{
+  left-=1;
+  if(left<=0){
+   clearInterval(closeTimer);
+   closeBtn.disabled=false;
+   closeBtn.textContent="FECHAR";
+  }else{
+   closeBtn.textContent=`FECHAR · ${left}`;
+  }
+ },1000);
+}
 function openModal(f){
  document.getElementById("modalArt").innerHTML=foodArt(f.key);
  document.getElementById("modalName").innerHTML=`${f.name}<small>${f.ko}</small>`;
@@ -561,6 +581,7 @@ function openModal(f){
  modalCard.classList.toggle("special", f.key==="special");
  modalCard.querySelectorAll(".flake").forEach(el=>el.remove());
  modal.classList.add("show");
+ armClose();
  if(f.key==="special" && !reduce){
   const colors=["#d8c55f","#cd867e","#a6b364","#f3e6cf","#e0b59a"];
   for(let i=0;i<14;i++){
@@ -577,9 +598,10 @@ function openModal(f){
   }
  }
 }
-function nextParticipant(){
- sessionStorage.removeItem("kfoodSurveyDone");
- location.href="index.html";
+function closeModal(){
+ const closeBtn=document.getElementById("close");
+ if(closeBtn.disabled) return;
+ modal.classList.remove("show");
 }
 
 function animate(from,to,duration,ease,onUpdate,done){
@@ -655,9 +677,9 @@ spinBtn.addEventListener("click",()=>{
  animate(current,current-8,140,t=>t*t,(v)=>{ rot=v; setWheel(v); },spinMain);
 });
 
-document.getElementById("close").addEventListener("click",nextParticipant);
+document.getElementById("close").addEventListener("click",closeModal);
 document.addEventListener("keydown",e=>{
- if(e.key==="Escape" && modal.classList.contains("show")) nextParticipant();
+ if(e.key==="Escape" && modal.classList.contains("show")) closeModal();
  if((e.key===" " || e.key==="Enter") && document.activeElement===spinBtn) return;
  if(e.key===" " && state==="ready" && !modal.classList.contains("show")){
   e.preventDefault();
