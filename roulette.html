@@ -368,7 +368,7 @@ body::before{
 <aside class="card right">
   <div class="host">
     <b>Uma rodada por pessoa</b>
-    <span>Gire uma vez. Mostre o resultado e retire este broche. Sujeito a disponibilidade.</span>
+    <span id="hostNote">Gire uma vez. Mostre o resultado e retire seu brinde.</span>
   </div>
 
   <div class="result" id="result" aria-live="polite">
@@ -376,9 +376,9 @@ body::before{
       <div class="result-art" id="resultArt"></div>
       <div class="result-kicker">SEU PRATO</div>
       <h2 id="resultName">Gire a roleta</h2>
-      <div class="pt" id="resultPt">O broche aparece aqui.</div>
-      <div class="explain" id="resultExplain">Mostre o resultado para a equipe e retire o broche. Sujeito a disponibilidade.</div>
-      <div class="prize" id="resultPrize">Sujeito a disponibilidade</div>
+      <div class="pt" id="resultPt">Seu brinde aparece aqui.</div>
+      <div class="explain" id="resultExplain">Mostre o resultado para a equipe e retire seu brinde.</div>
+      <div class="prize" id="resultPrize">Todos ganham um brinde</div>
     </div>
   </div>
 
@@ -401,7 +401,7 @@ body::before{
     </div>
     <div class="modal-desc" id="modalDesc"></div>
     <div class="modal-pt" id="modalPt"></div>
-    <div class="modal-prize"><span>SEU BROCHE</span><strong id="modalPrize">Este broche</strong></div>
+    <div class="modal-prize"><span id="modalGiftLabel">SEU BRINDE</span><strong id="modalPrize">Seu brinde</strong></div>
     <button class="close" id="close" type="button" disabled>FECHAR</button>
   </div>
 </div>
@@ -533,6 +533,22 @@ function pegAt(rotation){
 }
 function wheelEase(t){return 1-Math.pow(1-t,1.85)}
 
+function badgesOn(){
+ const day=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Sao_Paulo",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
+ return day>="2026-10-07";
+}
+function prizeLine(){
+ return badgesOn()
+  ? "Mostre o resultado e retire este broche. Sujeito a disponibilidade."
+  : "Mostre o resultado e retire seu brinde.";
+}
+function applyGiftCopy(){
+ const on=badgesOn();
+ document.getElementById("hostNote").textContent=on
+  ? "Gire uma vez. Mostre o resultado e retire este broche. Sujeito a disponibilidade."
+  : "Gire uma vez. Mostre o resultado e retire seu brinde.";
+ document.getElementById("modalGiftLabel").textContent=on?"SEU BROCHE":"SEU BRINDE";
+}
 function setWheel(deg){
  wheel.style.transform=`rotate(${deg}deg)`;
 }
@@ -541,16 +557,18 @@ function showResult(f){
  document.getElementById("resultName").textContent=f.name;
  document.getElementById("resultPt").textContent=f.pt;
  document.getElementById("resultExplain").textContent=f.desc;
- document.getElementById("resultPrize").textContent=f.prize;
+ document.getElementById("resultPrize").textContent=prizeLine();
  result.classList.toggle("special", f.key==="special");
  menuItems.forEach((el,i)=>el.classList.toggle("on", foods[i].key===f.key));
 }
 function resetResult(){
  document.getElementById("resultArt").innerHTML="";
  document.getElementById("resultName").textContent="Gire a roleta";
- document.getElementById("resultPt").textContent="O broche aparece aqui.";
- document.getElementById("resultExplain").textContent="Mostre o resultado para a equipe e retire o broche. Sujeito a disponibilidade.";
- document.getElementById("resultPrize").textContent="Sujeito a disponibilidade";
+ document.getElementById("resultPt").textContent=badgesOn()?"O broche aparece aqui.":"Seu brinde aparece aqui.";
+ document.getElementById("resultExplain").textContent=badgesOn()
+  ? "Mostre o resultado para a equipe e retire o broche. Sujeito a disponibilidade."
+  : "Mostre o resultado para a equipe e retire seu brinde.";
+ document.getElementById("resultPrize").textContent=badgesOn()?"Sujeito a disponibilidade":"Todos ganham um brinde";
  result.classList.remove("special","flash");
  menuItems.forEach(el=>el.classList.remove("on"));
 }
@@ -577,7 +595,7 @@ function openModal(f){
  document.getElementById("modalName").innerHTML=`${f.name}<small>${f.ko}</small>`;
  document.getElementById("modalDesc").textContent=f.desc;
  document.getElementById("modalPt").textContent=f.pt+"  "+f.pron;
- document.getElementById("modalPrize").textContent=f.prize;
+ document.getElementById("modalPrize").textContent=prizeLine();
  modalCard.classList.toggle("special", f.key==="special");
  modalCard.querySelectorAll(".flake").forEach(el=>el.remove());
  modal.classList.add("show");
@@ -686,6 +704,7 @@ document.addEventListener("keydown",e=>{
   spinBtn.click();
  }
 });
+applyGiftCopy();
 </script>
 </body>
 </html>
