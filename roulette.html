@@ -434,6 +434,16 @@ function svgFood(key){
 function foodArt(key){
  return `<img src="assets/foods/${key}.png" alt="">`;
 }
+function pickIndex(){
+ const weights=foods.map(f=>f.key==="gimbap"?4:f.key==="special"?1:2);
+ const total=weights.reduce((sum,w)=>sum+w,0);
+ let roll=Math.random()*total;
+ for(let i=0;i<weights.length;i++){
+  roll-=weights[i];
+  if(roll<0) return i;
+ }
+ return foods.length-1;
+}
 
 const wheel=document.getElementById("wheel");
 const menuGrid=document.getElementById("menuGrid");
@@ -666,7 +676,7 @@ spinBtn.addEventListener("click",()=>{
  instruction.textContent="A roleta está girando";
  wheelbox.classList.remove("landed");
  ensureAudio();
- const idx=Math.floor(Math.random()*foods.length);
+ const idx=pickIndex();
  const current=rot;
  const targetMod=mod(-idx*45);
  let delta=mod(targetMod-mod(current));
