@@ -374,7 +374,7 @@ body::before{
   <div class="result" id="result" aria-live="polite">
     <div class="result-in" id="resultIn">
       <div class="result-art" id="resultArt"></div>
-      <div class="result-kicker">SEU PRATO</div>
+      <div class="result-kicker" id="resultKicker">SEU PRATO</div>
       <h2 id="resultName">Gire a roleta</h2>
       <div class="pt" id="resultPt">Seu brinde aparece aqui.</div>
       <div class="explain" id="resultExplain">Mostre o resultado para a equipe e retire seu brinde.</div>
@@ -411,7 +411,7 @@ const foods=[
  {key:"mandu",name:"MANDU",ko:"만두",pron:"만-두 · MAN-DU",pt:"Bolinho de massa fina recheada.",desc:"Mandu é o bolinho de massa fina recheada, preparado no vapor, frito ou em sopas. Diferente do guioza, o mandu pode ser preparado com diversos tipos de recheio, incluindo kimchi e combinações ricas em vegetais.",prize:"Mostre o resultado e retire este broche. Sujeito a disponibilidade."},
  {key:"ramyeon",name:"RAMYEON",ko:"라면",pron:"라-면 · RA-MYEON",pt:"O macarrão instantâneo sul-coreano.",desc:"Ramyeon é o icônico macarrão instantâneo sul-coreano, famoso por sua praticidade e variedade de sabores picantes. Diferente do ramen (lámen), frequentemente preparado de forma artesanal, o ramyeon é um produto instantâneo.",prize:"Mostre o resultado e retire este broche. Sujeito a disponibilidade."},
  {key:"soju",name:"SOJU",ko:"소주",pron:"소-주 · SO-JU",pt:"A bebida destilada da Coreia.",desc:"Soju é a bebida destilada e transparente tradicional da Coreia, famosa por sua garrafa verde. Diferente do saquê (sake), que é uma bebida fermentada à base de arroz, o soju é um destilado com teor alcoólico mais elevado.",prize:"Mostre o resultado e retire este broche. Sujeito a disponibilidade."},
- {key:"tteok",name:"TTEOK",ko:"떡",pron:"떡 · TTEOK",pt:"O bolo de arroz tradicional coreano.",desc:"Tteok é o bolo ou massa de arroz tradicional coreano presente em festividades e no cotidiano. Diferente do mochi, focado no bolinho de arroz glutinoso, o tteok abrange uma vasta variedade de formatos, texturas, recheios e modos de preparo.",prize:"Mostre o resultado e retire este broche. Sujeito a disponibilidade."},
+ {key:"special",name:"SPECIAL",ko:"특별경품",pron:"특별경품 · SPECIAL",pt:"Prêmio especial.",desc:"Este é o prêmio especial da roleta. Mostre o resultado para a equipe e retire o brinde especial.",prize:"Mostre o resultado e retire o brinde especial. Sujeito a disponibilidade."},
  {key:"doenjang",name:"DOENJANG",ko:"된장",pron:"된-장 · DOEN-JANG",pt:"A pasta de soja fermentada.",desc:"Doenjang é a pasta espessa de soja fermentada rica em proteínas. Diferente do missô, de fermentação curta e sabor mais suave e adocicado, o doenjang passa por longo processo de maturação, resultando em um sabor salgado e intenso.",prize:"Mostre o resultado e retire este broche. Sujeito a disponibilidade."},
  {key:"ganjang",name:"GANJANG",ko:"간장",pron:"간-장 · GAN-JANG",pt:"O molho de soja fermentado coreano.",desc:"Ganjang é o molho de soja fermentado coreano de sabor profundo e marcante. Diferente do shoyu, feito com soja e trigo, o ganjang tradicional é produzido predominantemente com soja e passa por uma fermentação mais longa.",prize:"Mostre o resultado e retire este broche. Sujeito a disponibilidade."},
  {key:"gimbap",name:"GIMBAP",ko:"김밥",pron:"김-밥 · GIM-BAP",pt:"Rolo de alga com arroz e recheios.",desc:"Gimbap é o rolo de alga com arroz e recheios variados de vegetais e proteínas. Diferente do sushi, temperado com vinagre, o arroz do gimbap é temperado com óleo de gergelim.",prize:"Mostre o resultado e retire este broche. Sujeito a disponibilidade."},
@@ -554,6 +554,7 @@ function setWheel(deg){
 }
 function showResult(f){
  document.getElementById("resultArt").innerHTML=foodArt(f.key);
+ document.getElementById("resultKicker").textContent=f.key==="special"?"PRÊMIO ESPECIAL":"SEU PRATO";
  document.getElementById("resultName").textContent=f.name;
  document.getElementById("resultPt").textContent=f.pt;
  document.getElementById("resultExplain").textContent=f.desc;
@@ -563,6 +564,7 @@ function showResult(f){
 }
 function resetResult(){
  document.getElementById("resultArt").innerHTML="";
+ document.getElementById("resultKicker").textContent="SEU PRATO";
  document.getElementById("resultName").textContent="Gire a roleta";
  document.getElementById("resultPt").textContent=badgesOn()?"O broche aparece aqui.":"Seu brinde aparece aqui.";
  document.getElementById("resultExplain").textContent=badgesOn()
