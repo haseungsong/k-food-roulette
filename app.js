@@ -1,10 +1,9 @@
-const TOTAL_QUESTIONS = 11;
-const RADIO_GROUPS = ["age", "gender", "region", "awareness", "frequency", "purchase", "interest", "event", "kfoodEvent"];
-const MULTI_STEPS = new Set([5, 6]);
+const TOTAL_QUESTIONS = 12;
+const RADIO_GROUPS = ["age", "gender", "region", "kimchiKnown", "kimchiTaste", "kimchiFrequency", "kimchiBuy", "kimchiWhere", "kimchiFactor", "kimchiType", "kimchiBarrier", "kimchiRecommend"];
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtxK-MAvafa0jWXjX90M9ElP0VIc5QviW9XXSvzjFvQH6y6ql9sfJEXOhYHpJSh5HlcQ/exec";
 
-const steps = [[1], [2, 3], [4], [5], [6], [7], [8], [9], [10], [11]];
+const steps = [[1], [2, 3], [4], [5], [6], [7], [8], [9], [10], [11], [12]];
 let stepIndex = 0;
 let moving = false;
 
@@ -33,14 +32,23 @@ function showStep() {
     document.getElementById("progressPercent").textContent = `${percent}%`;
     document.getElementById("progressFill").style.width = `${percent}%`;
     document.getElementById("backButton").classList.toggle("hidden", stepIndex === 0);
-    document.getElementById("nextButton").classList.toggle("hidden", !steps[stepIndex].some((n) => MULTI_STEPS.has(n)));
-    document.getElementById("submitButton").classList.toggle("hidden", !current.has(11));
+    const whereOther = document.querySelector('input[name="kimchiWhere"]:checked');
+    const needsNext = current.has(8) && whereOther && whereOther.value === "Outro";
+    document.getElementById("nextButton").classList.toggle("hidden", !needsNext);
+    document.getElementById("submitButton").classList.toggle("hidden", !current.has(12));
+    const otherField = document.getElementById("kimchiWhereOther");
+    if (!current.has(8) || !whereOther || whereOther.value !== "Outro") otherField.classList.remove("show");
     window.scrollTo(0, 0);
 }
 
 function stepAnswered() {
     return steps[stepIndex].every((number) => {
-        return document.querySelector(`[data-question="${number}"] input:checked`);
+        const picked = document.querySelector(`[data-question="${number}"] input:checked`);
+        if (!picked) return false;
+        if (picked.name === "kimchiWhere" && picked.value === "Outro") {
+            return document.getElementById("kimchiWhereOther").value.trim().length > 0;
+        }
+        return true;
     });
 }
 
@@ -64,21 +72,25 @@ document.getElementById("backButton").addEventListener("click", () => {
 
 document.getElementById("nextButton").addEventListener("click", goNext);
 
+document.getElementById("kimchiWhereOther").addEventListener("input", () => {
+    if (steps[stepIndex].includes(8) && stepAnswered()) {
+        document.getElementById("nextButton").classList.remove("hidden");
+    }
+});
+
 document.addEventListener("change", function (event) {
     const input = event.target;
-    if (input.name === "foods") {
-        const boxes = [...document.querySelectorAll('input[name="foods"]')];
-        if (input.value === "Nenhuma" && input.checked) {
-            boxes.forEach((box) => { if (box !== input) box.checked = false; });
-        } else if (input.checked) {
-            boxes.forEach((box) => { if (box.value === "Nenhuma") box.checked = false; });
-        }
-        return;
+    if (!input.matches('input[type="radio"]')) return;
+
+    const otherField = document.getElementById("kimchiWhereOther");
+    if (input.name === "kimchiWhere") {
+        const isOther = input.value === "Outro";
+        otherField.classList.toggle("show", isOther);
+        document.getElementById("nextButton").classList.toggle("hidden", !isOther);
+        if (isOther) return;
     }
 
-    if (!input.matches('input[type="radio"]')) return;
-    if (steps[stepIndex].includes(11)) return;
-    if (steps[stepIndex].some((n) => MULTI_STEPS.has(n))) return;
+    if (steps[stepIndex].includes(12)) return;
     if (stepAnswered()) setTimeout(goNext, 180);
 });
 
@@ -94,18 +106,10 @@ function validateSurvey() {
         }
     }
 
-    const foods = document.querySelectorAll('input[name="foods"]:checked');
-    if (foods.length === 0) {
-        showError("Por favor, selecione pelo menos uma opção na pergunta 5.");
-        stepIndex = steps.findIndex((step) => step.includes(5));
-        showStep();
-        return false;
-    }
-
-    const favorites = document.querySelectorAll('input[name="favorite"]:checked');
-    if (favorites.length === 0) {
-        showError("Por favor, selecione pelo menos uma opção na pergunta 6.");
-        stepIndex = steps.findIndex((step) => step.includes(6));
+    const where = document.querySelector('input[name="kimchiWhere"]:checked');
+    if (where && where.value === "Outro" && !document.getElementById("kimchiWhereOther").value.trim()) {
+        showError("Escreva a outra resposta antes de enviar.");
+        stepIndex = steps.findIndex((step) => step.includes(8));
         showStep();
         return false;
     }
@@ -119,22 +123,21 @@ function collectSurveyData() {
         return element ? element.value : "";
     };
 
-    const foods = Array.from(document.querySelectorAll('input[name="foods"]:checked'))
-        .map((element) => element.value);
-
     return {
         timestamp: new Date().toISOString(),
         age: getRadio("age"),
         gender: getRadio("gender"),
         region: getRadio("region"),
-        awareness: getRadio("awareness"),
-        foods: foods.join(", "),
-        favorite: Array.from(document.querySelectorAll('input[name="favorite"]:checked')).map((element) => element.value).join(", "),
-        frequency: getRadio("frequency"),
-        purchase: getRadio("purchase"),
-        interest: Number(getRadio("interest")),
-        event: getRadio("event"),
-        kfoodEvent: getRadio("kfoodEvent")
+        kimchiKnown: getRadio("kimchiKnown"),
+        kimchiTaste: getRadio("kimchiTaste"),
+        kimchiFrequency: getRadio("kimchiFrequency"),
+        kimchiBuy: getRadio("kimchiBuy"),
+        kimchiWhere: getRadio("kimchiWhere"),
+        kimchiWhereOther: document.getElementById("kimchiWhereOther").value.trim(),
+        kimchiFactor: getRadio("kimchiFactor"),
+        kimchiType: getRadio("kimchiType"),
+        kimchiBarrier: getRadio("kimchiBarrier"),
+        kimchiRecommend: getRadio("kimchiRecommend")
     };
 }
 
