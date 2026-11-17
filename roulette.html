@@ -52,9 +52,8 @@ body::before{
 .left{padding:26px 26px 22px; display:flex; flex-direction:column; overflow:hidden}
 .top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px}
 .logo-area{display:flex; flex-direction:column; align-items:flex-start; gap:12px; min-width:0}
-.logo-row{display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; min-width:0}
-.logo-row img{height:34px; width:auto; max-width:100%; display:block; object-fit:contain}
-.logo-row .cccb{height:40px}
+.logo-row{display:grid; grid-template-columns:4.08fr 6.88fr; align-items:center; gap:clamp(8px,2vw,16px); width:min(100%,520px)}
+.logo-row img{width:100%; height:auto; display:block}
 .kicker{font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#003763}
 .title{
   font-family:"DM Sans",sans-serif; white-space:nowrap;
@@ -241,7 +240,8 @@ body::before{
 .menu-art{width:64px; height:64px; flex:none}
 .menu-item b{font-size:11px; letter-spacing:.02em}
 .menu-item span{display:block; color:var(--muted); font-size:10px; margin-top:1px; font-family:Pretendard,sans-serif}
-.footer{margin-top:auto; padding-top:14px; text-align:center; color:#9a8b80; font-size:10px; line-height:1.55}
+.footer{margin-top:auto; padding-top:16px; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; color:#9a8b80; font-size:10px; line-height:1.55}
+.footer img{height:38px; width:auto; display:block}
 .modal{
   position:fixed; inset:0; background:rgba(31,24,21,.56);
   display:grid; place-items:center; padding:20px;
@@ -315,8 +315,7 @@ body::before{
   .app{padding:8px; gap:10px}
   .left,.right{padding:12px 12px 14px}
   .logo-area{gap:8px}
-  .logo-row img{height:26px}
-  .logo-row .cccb{height:30px}
+  .logo-row{width:100%; gap:8px}
   .title{font-size:22px}
   .stage{margin-top:2px}
   .wheelbox{width:min(100%, calc(100dvh - 230px), 420px)}
@@ -329,7 +328,8 @@ body::before{
   .result{min-height:0; margin-top:10px; padding:16px 14px}
   .result h2{font-size:28px}
   .explain{font-size:12px}
-  .menu,.footer{display:none}
+  .menu{display:none}
+  .footer img{height:34px}
   .modal-top{align-items:flex-start}
   .modal-art{width:180px; height:auto}
   .modal h2{font-size:28px}
@@ -348,7 +348,6 @@ body::before{
       <div class="logo-row">
         <img src="assets/mafra-logo.png" alt="Ministry of Agriculture, Food and Rural Affairs">
         <img src="assets/at-logo.png" alt="Korea Agro-Fisheries &amp; Food Trade Corporation">
-        <img class="cccb" src="assets/cccb-logo.svg" alt="Centro Cultural Coreano no Brasil">
       </div>
       <div class="title">Roleta <em>K-food</em></div>
     </div>
@@ -393,7 +392,10 @@ body::before{
     <h3>MENU K-food</h3>
     <div class="menu-grid" id="menuGrid"></div>
   </div>
-  <div class="footer">Centro Cultural Coreano no Brasil<br>Avenida Paulista, 460 – Bela Vista – São Paulo</div>
+  <div class="footer">
+    <img src="assets/cccb-logo.svg" alt="Centro Cultural Coreano no Brasil">
+    <span>Centro Cultural Coreano no Brasil<br>Avenida Paulista, 460 – Bela Vista – São Paulo</span>
+  </div>
 </aside>
 </main>
 
