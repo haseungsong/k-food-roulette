@@ -52,7 +52,9 @@ body::before{
 .left{padding:26px 26px 22px; display:flex; flex-direction:column; overflow:hidden}
 .top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px}
 .logo-area{display:flex; flex-direction:column; align-items:flex-start; gap:12px; min-width:0}
-.brand-logo{height:54px; width:auto; display:block}
+.logo-row{display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; min-width:0}
+.logo-row img{height:34px; width:auto; max-width:100%; display:block; object-fit:contain}
+.logo-row .cccb{height:40px}
 .kicker{font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#003763}
 .title{
   font-family:"DM Sans",sans-serif; white-space:nowrap;
@@ -312,8 +314,9 @@ body::before{
 @media(max-width:700px){
   .app{padding:8px; gap:10px}
   .left,.right{padding:12px 12px 14px}
-  .logo-area{flex-direction:row; align-items:center; gap:10px}
-  .brand-logo{height:34px}
+  .logo-area{gap:8px}
+  .logo-row img{height:26px}
+  .logo-row .cccb{height:30px}
   .title{font-size:22px}
   .stage{margin-top:2px}
   .wheelbox{width:min(100%, calc(100dvh - 230px), 420px)}
@@ -342,7 +345,11 @@ body::before{
 <section class="card left">
   <div class="top">
     <div class="logo-area">
-      <img class="brand-logo" src="assets/cccb-logo.svg" alt="Centro Cultural Coreano no Brasil">
+      <div class="logo-row">
+        <img src="assets/mafra-logo.png" alt="Ministry of Agriculture, Food and Rural Affairs">
+        <img src="assets/at-logo.png" alt="Korea Agro-Fisheries &amp; Food Trade Corporation">
+        <img class="cccb" src="assets/cccb-logo.svg" alt="Centro Cultural Coreano no Brasil">
+      </div>
       <div class="title">Roleta <em>K-food</em></div>
     </div>
   </div>
