@@ -435,7 +435,7 @@ function foodArt(key){
  return `<img src="assets/foods/${key}.png" alt="">`;
 }
 function pickIndex(){
- const weights=foods.map(f=>f.key==="gimbap"?4:f.key==="special"?1:2);
+ const weights=foods.map(f=>f.key==="kimchi"?6:f.key==="special"?1:2);
  const total=weights.reduce((sum,w)=>sum+w,0);
  let roll=Math.random()*total;
  for(let i=0;i<weights.length;i++){
