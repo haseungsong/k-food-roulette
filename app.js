@@ -1,9 +1,9 @@
-const TOTAL_QUESTIONS = 12;
-const RADIO_GROUPS = ["age", "gender", "region", "kimchiKnown", "kimchiTaste", "kimchiFrequency", "kimchiBuy", "kimchiWhere", "kimchiFactor", "kimchiType", "kimchiBarrier", "kimchiRecommend"];
+const TOTAL_QUESTIONS = 11;
+const RADIO_GROUPS = ["age", "gender", "kimchiKnown", "kimchiTaste", "kimchiFrequency", "kimchiBuy", "kimchiWhere", "kimchiFactor", "kimchiType", "kimchiBarrier", "kimchiRecommend"];
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtxK-MAvafa0jWXjX90M9ElP0VIc5QviW9XXSvzjFvQH6y6ql9sfJEXOhYHpJSh5HlcQ/exec";
 
-const steps = [[1], [2, 3], [4], [5], [6], [7], [8], [9], [10], [11], [12]];
+const steps = [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11]];
 let stepIndex = 0;
 let moving = false;
 
@@ -33,11 +33,11 @@ function showStep() {
     document.getElementById("progressFill").style.width = `${percent}%`;
     document.getElementById("backButton").classList.toggle("hidden", stepIndex === 0);
     const whereOther = document.querySelector('input[name="kimchiWhere"]:checked');
-    const needsNext = current.has(8) && whereOther && whereOther.value === "Outro";
+    const needsNext = current.has(7) && whereOther && whereOther.value === "Outro";
     document.getElementById("nextButton").classList.toggle("hidden", !needsNext);
-    document.getElementById("submitButton").classList.toggle("hidden", !current.has(12));
+    document.getElementById("submitButton").classList.toggle("hidden", !current.has(11));
     const otherField = document.getElementById("kimchiWhereOther");
-    if (!current.has(8) || !whereOther || whereOther.value !== "Outro") otherField.classList.remove("show");
+    if (!current.has(7) || !whereOther || whereOther.value !== "Outro") otherField.classList.remove("show");
     window.scrollTo(0, 0);
 }
 
@@ -73,7 +73,7 @@ document.getElementById("backButton").addEventListener("click", () => {
 document.getElementById("nextButton").addEventListener("click", goNext);
 
 document.getElementById("kimchiWhereOther").addEventListener("input", () => {
-    if (steps[stepIndex].includes(8) && stepAnswered()) {
+    if (steps[stepIndex].includes(7) && stepAnswered()) {
         document.getElementById("nextButton").classList.remove("hidden");
     }
 });
@@ -90,7 +90,7 @@ document.addEventListener("change", function (event) {
         if (isOther) return;
     }
 
-    if (steps[stepIndex].includes(12)) return;
+    if (steps[stepIndex].includes(11)) return;
     if (stepAnswered()) setTimeout(goNext, 180);
 });
 
@@ -109,7 +109,7 @@ function validateSurvey() {
     const where = document.querySelector('input[name="kimchiWhere"]:checked');
     if (where && where.value === "Outro" && !document.getElementById("kimchiWhereOther").value.trim()) {
         showError("Escreva a outra resposta antes de enviar.");
-        stepIndex = steps.findIndex((step) => step.includes(8));
+        stepIndex = steps.findIndex((step) => step.includes(7));
         showStep();
         return false;
     }
@@ -127,7 +127,6 @@ function collectSurveyData() {
         timestamp: new Date().toISOString(),
         age: getRadio("age"),
         gender: getRadio("gender"),
-        region: getRadio("region"),
         kimchiKnown: getRadio("kimchiKnown"),
         kimchiTaste: getRadio("kimchiTaste"),
         kimchiFrequency: getRadio("kimchiFrequency"),
