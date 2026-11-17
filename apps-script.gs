@@ -21,10 +21,16 @@ function doPost(e) {
     "Qual seria o principal fator na sua decisão de comprar Kimchi?",
     "Qual tipo de Kimchi você teria mais interesse em comprar?",
     "O que mais dificulta o consumo de Kimchi no Brasil?",
-    "Você recomendaria Kimchi para amigos ou familiares?"
+    "Você recomendaria Kimchi para amigos ou familiares?",
+    "Como você avalia a atividade de hoje?",
+    "Em quais partes você ficou satisfeito?"
   ];
 
-  if (sheet.getLastRow() === 0) sheet.appendRow(headers);
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(headers);
+  } else if (!sheet.getRange(1, 14).getValue()) {
+    sheet.getRange(1, 14, 1, 2).setValues([[headers[13], headers[14]]]);
+  }
 
   sheet.appendRow([
     data.timestamp || new Date(),
@@ -39,7 +45,9 @@ function doPost(e) {
     data.kimchiFactor || "",
     data.kimchiType || "",
     data.kimchiBarrier || "",
-    data.kimchiRecommend || ""
+    data.kimchiRecommend || "",
+    data.eventScore || "",
+    data.satisfied || ""
   ]);
 
   return ContentService.createTextOutput("ok");

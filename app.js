@@ -1,9 +1,9 @@
-const TOTAL_QUESTIONS = 11;
-const RADIO_GROUPS = ["age", "gender", "kimchiKnown", "kimchiTaste", "kimchiFrequency", "kimchiBuy", "kimchiWhere", "kimchiFactor", "kimchiType", "kimchiBarrier", "kimchiRecommend"];
+const TOTAL_QUESTIONS = 13;
+const RADIO_GROUPS = ["age", "gender", "kimchiKnown", "kimchiTaste", "kimchiFrequency", "kimchiBuy", "kimchiWhere", "kimchiFactor", "kimchiType", "kimchiBarrier", "kimchiRecommend", "eventScore"];
 
 const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxtxK-MAvafa0jWXjX90M9ElP0VIc5QviW9XXSvzjFvQH6y6ql9sfJEXOhYHpJSh5HlcQ/exec";
 
-const steps = [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11]];
+const steps = [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13]];
 let stepIndex = 0;
 let moving = false;
 
@@ -35,7 +35,7 @@ function showStep() {
     const whereOther = document.querySelector('input[name="kimchiWhere"]:checked');
     const needsNext = current.has(7) && whereOther && whereOther.value === "Outro";
     document.getElementById("nextButton").classList.toggle("hidden", !needsNext);
-    document.getElementById("submitButton").classList.toggle("hidden", !current.has(11));
+    document.getElementById("submitButton").classList.toggle("hidden", !current.has(13));
     const otherField = document.getElementById("kimchiWhereOther");
     if (!current.has(7) || !whereOther || whereOther.value !== "Outro") otherField.classList.remove("show");
     window.scrollTo(0, 0);
@@ -90,7 +90,7 @@ document.addEventListener("change", function (event) {
         if (isOther) return;
     }
 
-    if (steps[stepIndex].includes(11)) return;
+    if (steps[stepIndex].includes(13)) return;
     if (stepAnswered()) setTimeout(goNext, 180);
 });
 
@@ -110,6 +110,13 @@ function validateSurvey() {
     if (where && where.value === "Outro" && !document.getElementById("kimchiWhereOther").value.trim()) {
         showError("Escreva a outra resposta antes de enviar.");
         stepIndex = steps.findIndex((step) => step.includes(7));
+        showStep();
+        return false;
+    }
+
+    if (!document.querySelector('input[name="satisfied"]:checked')) {
+        showError("Marque pelo menos uma parte na pergunta 13.");
+        stepIndex = steps.findIndex((step) => step.includes(13));
         showStep();
         return false;
     }
@@ -136,7 +143,9 @@ function collectSurveyData() {
         kimchiFactor: getRadio("kimchiFactor"),
         kimchiType: getRadio("kimchiType"),
         kimchiBarrier: getRadio("kimchiBarrier"),
-        kimchiRecommend: getRadio("kimchiRecommend")
+        kimchiRecommend: getRadio("kimchiRecommend"),
+        eventScore: getRadio("eventScore"),
+        satisfied: Array.from(document.querySelectorAll('input[name="satisfied"]:checked')).map((element) => element.value).join(", ")
     };
 }
 
